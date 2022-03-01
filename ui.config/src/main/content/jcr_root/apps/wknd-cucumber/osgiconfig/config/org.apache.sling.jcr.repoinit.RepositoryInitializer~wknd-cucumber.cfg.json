@@ -1,0 +1,7 @@
+{
+    "scripts": [
+        "create path (sling:OrderedFolder) /content/dam/wknd-cucumber",
+        "create path (nt:unstructured) /content/dam/wknd-cucumber/jcr:content",
+        "set properties on /content/dam/wknd-cucumber/jcr:content\n  set cq:conf{String} to /conf/wknd-cucumber\n  set jcr:title{String} to \"WKND Sites Project\"\nend"
+    ]
+}
