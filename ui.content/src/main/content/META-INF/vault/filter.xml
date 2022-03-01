@@ -2,6 +2,7 @@
 <workspaceFilter version="1.0">
     <filter root="/conf/wknd-cucumber" mode="merge"/>
     <filter root="/content/wknd-cucumber" mode="merge"/>
+    <filter root="/content/dam/wknd-cucumber" mode="merge"/>
     <filter root="/content/dam/wknd-cucumber/asset.jpg" mode="merge"/>
     <filter root="/content/experience-fragments/wknd-cucumber" mode="merge"/>
 </workspaceFilter>
