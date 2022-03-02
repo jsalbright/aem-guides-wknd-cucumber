@@ -15,14 +15,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class aemStepDefs {
-    public WebDriver driver;
-    public ChromeOptions options;
-    public WebDriverWait wait;
+    public WebDriver driver;;
 
     @Given("user navigates to login page")
     public void userNavigatesToLoginPage() {
         System.setProperty("webdriver.chrome.driver","/usr/local/bin/chromedriver");
-        options = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
         driver.get("http://localhost:4502");
@@ -30,7 +28,7 @@ public class aemStepDefs {
 
     @When("user logs in as admin")
     public void userLogsInAsAdmin() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
         driver.findElement(By.id("username")).sendKeys("admin");
         driver.findElement(By.id("password")).sendKeys("admin");

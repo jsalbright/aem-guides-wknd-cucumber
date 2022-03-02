@@ -10,9 +10,10 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 // @CucumberContextConfiguration
 @CucumberOptions(
-        plugin = { "pretty",                                    // applies color to cucumber report
-                   "html:target/cucumber-reports/index.html",   // generates HTML cucumber report
-                   "json:target/cucumber-reports/cucumber.json" // generates JSON cucumber report
+        plugin = { "pretty",                                     // applies color to cucumber report
+                   "html:target/cucumber-reports/index.html",    // generates HTML cucumber report
+                   "json:target/cucumber-reports/cucumber.json", // generates JSON cucumber report
+                   "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         features = { "classpath:features" }, // location of feature files
         glue = { "com.aem.wknd.bdd.pages" }) // location of step
