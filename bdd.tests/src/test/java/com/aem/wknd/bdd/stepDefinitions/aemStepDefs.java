@@ -1,4 +1,4 @@
-package com.aem.wknd.bdd.pages;
+package com.aem.wknd.bdd.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class aemStepDefs {
-    public WebDriver driver;;
+    public WebDriver driver;
 
     @Given("user navigates to login page")
     public void userNavigatesToLoginPage() {
@@ -40,5 +40,17 @@ public class aemStepDefs {
         String titleText = driver.findElement(By.className("granite-title")).getText();
         Assert.assertEquals("Navigation", titleText);
         driver.close();
+    }
+
+    @Given("user is logged in as admin")
+    public void userIsLoggedInAsAdmin() {
+    }
+
+    @When("user creates a new page object")
+    public void userCreatesANewPageObject() {
+    }
+
+    @Then("user sees new page")
+    public void userSeesNewPage() {
     }
 }

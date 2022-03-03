@@ -13,10 +13,10 @@ import org.junit.runner.RunWith;
         plugin = { "pretty",                                     // applies color to cucumber report
                    "html:target/cucumber-reports/index.html",    // generates HTML cucumber report
                    "json:target/cucumber-reports/cucumber.json", // generates JSON cucumber report
-                   "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                   "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" // generates Extent Reports
         },
         features = { "classpath:features" }, // location of feature files
-        glue = { "com.aem.wknd.bdd.pages" }) // location of step
+        glue = { "com.aem.wknd.bdd.stepDefinitions" }) // location of step
 // implementation
 
 public class CucumberTest {
