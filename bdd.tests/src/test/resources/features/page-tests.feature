@@ -1,4 +1,3 @@
-@news
 Feature: Arbitrary Page tests
   Scenario: Page contains title
     Given user visits some-site

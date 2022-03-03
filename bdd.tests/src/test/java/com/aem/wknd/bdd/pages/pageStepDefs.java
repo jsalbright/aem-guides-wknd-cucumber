@@ -4,23 +4,16 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class PageStepDefs {
-
+public class pageStepDefs {
     @Given("user visits some-site")
-    public void given_user_visits_site(){
-
+    public void userVisitsSomeSite() {
     }
 
-
     @When("page is rendered")
-    public void when_page_is_rendered()
-    {
-
+    public void pageIsRendered() {
     }
 
     @Then("title is Hello World")
-    public void then_title_is_verified()
-    {
-
+    public void titleIsHelloWorld() {
     }
 }
