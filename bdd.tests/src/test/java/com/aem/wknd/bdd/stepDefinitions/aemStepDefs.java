@@ -1,56 +1,69 @@
 package com.aem.wknd.bdd.stepDefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
+import pageObjects.AssetsPage;
+import pageObjects.LandingPage;
+import pageObjects.LoginPage;
+import utils.TestContextSetup;
 
 public class aemStepDefs {
-    public WebDriver driver;
+    private TestContextSetup testContextSetup;
+    private LoginPage loginPage;
+    private LandingPage landingPage;
+    private AssetsPage assetsPage;
+
+    public aemStepDefs(TestContextSetup testContextSetup) {
+        this.testContextSetup = testContextSetup;
+        this.loginPage = testContextSetup.pageObjectManager.getLoginPage();
+        this.landingPage = testContextSetup.pageObjectManager.getLandingPage();
+        this.assetsPage = testContextSetup.pageObjectManager.getAssetsPage();
+    }
 
     @Given("user navigates to login page")
     public void userNavigatesToLoginPage() {
-        System.setProperty("webdriver.chrome.driver","/usr/local/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
-        driver.get("http://localhost:4502");
+        Assert.assertNotNull(loginPage);
     }
 
     @When("user logs in as admin")
     public void userLogsInAsAdmin() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
-        driver.findElement(By.id("username")).sendKeys("admin");
-        driver.findElement(By.id("password")).sendKeys("admin");
-        driver.findElement(By.id("submit-button")).click();
+        loginPage.enterPassword("admin");
+        loginPage.enterUsername("admin");
+        loginPage.submitCreds();
     }
 
     @Then("user sees admin landing page")
     public void userSeesAdminLandingPage() {
-        String titleText = driver.findElement(By.className("granite-title")).getText();
-        Assert.assertEquals("Navigation", titleText);
-        driver.close();
+        landingPage.open();
+        landingPage.assertLandingPage();
+        testContextSetup.testBase.WebDriverManager().quit();
     }
 
-    @Given("user is logged in as admin")
-    public void userIsLoggedInAsAdmin() {
+    @Given("user is logged in and on AssetsPage")
+    public void userIsLoggedInAndOnAssetsPage() {
+        userLogsInAsAdmin();
+        assetsPage.open();
     }
 
-    @When("user creates a new page object")
-    public void userCreatesANewPageObject() {
+    @And("searches for asset with keyword {string}")
+    public void searchesForAssetWithKeyword(String keyword) {
+        assetsPage.selectWkndCucumberFolder();
+        assetsPage.searchForAsset(keyword);
+        assetsPage.selectFirstAsset();
     }
 
-    @Then("user sees new page")
-    public void userSeesNewPage() {
+    @When("user attempts to crop asset")
+    public void userAttemptsToCropAsset() {
+        assetsPage.editSelectedAsset();
     }
+
+    @Then("asset is cropped")
+    public void assetIsCropped() {
+        assetsPage.confirmAssetCrop();
+    }
+
 }

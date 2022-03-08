@@ -4,7 +4,8 @@ Feature: AEM Testing
     When user logs in as admin
     Then user sees admin landing page
 
-  Scenario: User successfully creates a new page object
-    Given user is logged in as admin
-    When user creates a new page object
-    Then user sees new page
+  Scenario: User successfully crops asset
+    Given user is logged in and on AssetsPage
+    And searches for asset with keyword "asset"
+    When user attempts to crop asset
+    Then asset is cropped

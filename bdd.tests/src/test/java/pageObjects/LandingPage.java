@@ -1,28 +1,24 @@
 package pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LandingPage {
     public WebDriver driver;
 
+    private By classNavigationTitle = By.className("granite-title");
+
     public LandingPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By search = By.xpath("//input[@type='search']");
-    private By productName = By.cssSelector("h4.product-name");
-    private By topDeals = By.linkText("Top Deals");
-
-    public void searchItem(String name){
-        driver.findElement(search).sendKeys(name);
+    public void open() {
+        this.driver.navigate().to("http://localhost:4502" + "/aem/start.html");
     }
 
-    public String getProductName(){
-        return driver.findElement(productName).getText();
-    }
-
-    public void selectTopDealsPage(){
-        driver.findElement(topDeals).click();
+    public void assertLandingPage() {
+        String navigationTitle = driver.findElement(classNavigationTitle).getText();
+        Assert.assertEquals("Navigation", navigationTitle);
     }
 }
