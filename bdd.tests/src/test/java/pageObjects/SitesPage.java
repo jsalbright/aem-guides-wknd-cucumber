@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,9 +21,15 @@ public class SitesPage {
     private By nextButtonXpath = By.xpath("//coral-panel[@class='coral3-Panel is-selected']//button[@type='button']");
     private By titleInputName = By.name("./jcr:title");
     private By pageNameInputName = By.name("pageName");
-    // //coral-panel[@class='coral3-Panel is-selected']//button[@type='button']
-    // pageName
-//
+    private By pageTitleInputName = By.name("./pageTitle");
+    private By navTitleInputName = By.name("./navTitle");
+    private By createPageButtonXpath = By.xpath("//coral-button-label[normalize-space()='Create']");
+    private By testContentPageXpath = By.xpath("//coral-columnview-item-thumbnail[@id='coral-id-13']");
+    private By moreButtonSelector = By.cssSelector("coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']");
+    private By deleteContentPageButtonXpath = By.xpath("//span[normalize-space()='(backspace)']");
+
+//    coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']
+
     public SitesPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -54,10 +61,34 @@ public class SitesPage {
         wait.until(ExpectedConditions.elementToBeClickable(contentPageXpath));
         this.driver.findElement(contentPageXpath).click();
         this.driver.findElement(nextButtonXpath).click();
+    }
 
+    public void enterPageDetails() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(titleInputName));
         this.driver.findElement(titleInputName).sendKeys("Hello-World");
         this.driver.findElement(pageNameInputName).sendKeys("Hello-Name");
+        this.driver.findElement(pageTitleInputName).sendKeys("Hello-Page-Title");
+        this.driver.findElement(navTitleInputName).sendKeys("Hello-Nav-Title");
+    }
 
+    public void publishContentPage() {
+        this.driver.findElement(createPageButtonXpath).click();
+    }
+
+    public void openContentPage() {
+        this.driver.navigate().to("http://localhost:4502" + "/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
+    }
+
+    public void assertPageTitle() {
+        String pageTitle = this.driver.getTitle();
+        Assert.assertEquals("Hello-World", pageTitle);
+//        deleteContentPage();
+    }
+
+    public void deleteContentPage() {
+        selectEnglishSite();
+        this.driver.findElement(testContentPageXpath).click();
+        this.driver.findElement(moreButtonSelector).click();
+        this.driver.findElement(deleteContentPageButtonXpath).click();
     }
 }

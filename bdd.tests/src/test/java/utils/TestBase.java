@@ -26,8 +26,8 @@ public class TestBase {
                 System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
                 options = new ChromeOptions();
                 options.addArguments("--headless");
-//              driver = new ChromeDriver(options);
-                driver = new ChromeDriver();
+              driver = new ChromeDriver(options);
+//                driver = new ChromeDriver();
             } else if (prop.getProperty("firefox").equalsIgnoreCase("firefox")) {
                 // TODO: Write firefox code
                 System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");

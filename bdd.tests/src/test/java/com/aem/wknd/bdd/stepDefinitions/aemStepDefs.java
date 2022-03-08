@@ -98,9 +98,13 @@ public class aemStepDefs {
         sitesPage.selectEnglishSite();
         sitesPage.clickCreateButton();
         sitesPage.createContentPage();
+        sitesPage.enterPageDetails();
+        sitesPage.publishContentPage();
     }
 
     @Then("user sees new content page")
     public void userSeesNewContentPage() {
+        sitesPage.openContentPage();
+        sitesPage.assertPageTitle();
     }
 }
