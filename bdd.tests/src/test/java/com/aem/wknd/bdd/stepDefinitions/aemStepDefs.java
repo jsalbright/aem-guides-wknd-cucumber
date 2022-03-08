@@ -96,6 +96,8 @@ public class aemStepDefs {
     @When("user authors new content page")
     public void userAuthorsNewContentPage() {
         sitesPage.selectEnglishSite();
+        sitesPage.clickCreateButton();
+        sitesPage.createContentPage();
     }
 
     @Then("user sees new content page")
