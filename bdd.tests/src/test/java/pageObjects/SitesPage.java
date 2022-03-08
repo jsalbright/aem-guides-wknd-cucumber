@@ -18,9 +18,11 @@ public class SitesPage {
     private By pageItemXpath = By.xpath("//a[@class='cq-siteadmin-admin-createpage foundation-collection-action coral-Link coral3-BasicList-item coral3-AnchorList-item']//coral-list-item-content[@class='coral3-BasicList-item-content'][normalize-space()='Page']");
     private By contentPageXpath = By.xpath("//coral-card-title[normalize-space()='Content Page']");
     private By nextButtonXpath = By.xpath("//coral-panel[@class='coral3-Panel is-selected']//button[@type='button']");
+    private By titleInputName = By.name("./jcr:title");
+    private By pageNameInputName = By.name("pageName");
     // //coral-panel[@class='coral3-Panel is-selected']//button[@type='button']
-    //
-
+    // pageName
+//
     public SitesPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -42,14 +44,20 @@ public class SitesPage {
     }
 
     public void clickCreateButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(createButtonXpath));
         this.driver.findElement(createButtonXpath).click();
     }
 
     public void createContentPage() {
+        wait.until(ExpectedConditions.elementToBeClickable(pageItemXpath));
         this.driver.findElement(pageItemXpath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(contentPageXpath));
         this.driver.findElement(contentPageXpath).click();
         this.driver.findElement(nextButtonXpath).click();
 
-//        wait.until(ExpectedConditions.visibilityOfElementLocated());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(titleInputName));
+        this.driver.findElement(titleInputName).sendKeys("Hello-World");
+        this.driver.findElement(pageNameInputName).sendKeys("Hello-Name");
+
     }
 }
