@@ -1,4 +1,5 @@
 Feature: AEM Testing
+  @login
   Scenario: User successfully logs in as Admin
     Given user navigates to login page
     When user logs in as admin
@@ -10,12 +11,18 @@ Feature: AEM Testing
     When user attempts to crop asset
     Then asset is cropped
 
-  Scenario Outline: User successfully logs in
-    Given user navigates to login page
-    When user enters <UserName> in username field
-    And user enters <Password> in password field
-    Then user sees landing page
-    Examples:
-      | UserName  | Password  |
-      | admin     | admin     |
-      | user      | user      |
+  @sitespage
+  Scenario: User successfully authors page
+    Given user is logged in and on SitesPage
+    When user authors new content page
+    Then user sees new content page
+
+#  Scenario Outline: User successfully logs in
+#    Given user navigates to login page
+#    When user enters <UserName> in username field
+#    And user enters <Password> in password field
+#    Then user sees landing page
+#    Examples:
+#      | UserName  | Password  |
+#      | admin     | admin     |
+#      | user      | user      |

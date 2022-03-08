@@ -29,6 +29,7 @@ public class AssetsPage {
 
     public AssetsPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void open() {
@@ -45,7 +46,6 @@ public class AssetsPage {
     }
 
     public void searchForAsset(String keyword) {
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.driver.findElement(searchButtonXpath).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchInputXpath));
         WebElement searchField = this.driver.findElement(searchInputXpath);
