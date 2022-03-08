@@ -54,6 +54,9 @@ public class AssetsPage {
     }
 
     public void selectFirstAsset() {
+        // This function will only work if the first item returned is an image
+        // TODO: Update function to filter to only images
+        
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchResultSelector));
         this.driver.findElement(searchResultSelector).click();
     }
