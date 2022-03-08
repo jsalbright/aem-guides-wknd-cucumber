@@ -15,8 +15,8 @@ public class AssetsPage {
 
     private By classNavigationTitle = By.className("granite-title");
     private By wkndCucumberFolderXpathHref = By.xpath("//a[@href='/assets.html/content/dam/wknd-cucumber']");
-    private By searchButtonSelector = By.cssSelector("#granite-omnisearch-trigger > button");
-    private By searchInputSelector = By.cssSelector("body > coral-overlay > form > div > div.foundation-layout-panel-header > div > input");
+    private By searchButtonXpath = By.xpath("//coral-icon[@aria-label='search']");
+    private By searchInputXpath = By.xpath("//input[@placeholder='Type to search ...']");
     private By searchResultSelector = By.xpath("//*[@id=\"granite-omnisearch-result\"]/coral-masonry-item[1]/a");
     private By assetEditButtonXpath = By.xpath("/html/body/div/div[1]/coral-actionbar/coral-actionbar-primary/coral-actionbar-item[5]/button");
     private By startCropButtonXpath = By.xpath("//button[contains(@title,'Start Crop')]");
@@ -46,9 +46,9 @@ public class AssetsPage {
 
     public void searchForAsset(String keyword) {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        this.driver.findElement(searchButtonSelector).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(searchInputSelector));
-        WebElement searchField = this.driver.findElement(searchInputSelector);
+        this.driver.findElement(searchButtonXpath).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchInputXpath));
+        WebElement searchField = this.driver.findElement(searchInputXpath);
         searchField.sendKeys(keyword);
         searchField.sendKeys(Keys.ENTER);
     }

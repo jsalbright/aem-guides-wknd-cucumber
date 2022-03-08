@@ -9,3 +9,13 @@ Feature: AEM Testing
     And searches for asset with keyword "asset"
     When user attempts to crop asset
     Then asset is cropped
+
+  Scenario Outline: User successfully logs in
+    Given user navigates to login page
+    When user enters <UserName> in username field
+    And user enters <Password> in password field
+    Then user sees landing page
+    Examples:
+      | UserName  | Password  |
+      | admin     | admin     |
+      | user      | user      |

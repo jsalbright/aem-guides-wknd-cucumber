@@ -11,6 +11,8 @@ import pageObjects.LandingPage;
 import pageObjects.LoginPage;
 import utils.TestContextSetup;
 
+import java.io.IOException;
+
 public class aemStepDefs {
     private TestContextSetup testContextSetup;
     private LoginPage loginPage;
@@ -31,16 +33,15 @@ public class aemStepDefs {
 
     @When("user logs in as admin")
     public void userLogsInAsAdmin() {
-        loginPage.enterPassword("admin");
         loginPage.enterUsername("admin");
+        loginPage.enterPassword("admin");
         loginPage.submitCreds();
     }
 
     @Then("user sees admin landing page")
-    public void userSeesAdminLandingPage() {
+    public void userSeesAdminLandingPage() throws IOException {
         landingPage.open();
         landingPage.assertLandingPage();
-        testContextSetup.testBase.WebDriverManager().quit();
     }
 
     @Given("user is logged in and on AssetsPage")
@@ -58,7 +59,7 @@ public class aemStepDefs {
 
     @When("user attempts to crop asset")
     public void userAttemptsToCropAsset() {
-        assetsPage.editSelectedAsset();
+        //assetsPage.editSelectedAsset();
     }
 
     @Then("asset is cropped")
@@ -66,4 +67,20 @@ public class aemStepDefs {
         assetsPage.confirmAssetCrop();
     }
 
+    @When("^user enters (.+) in username field$")
+    public void userEntersUserNameInUsernameField(String username) {
+        loginPage.enterUsername(username);
+    }
+
+    @And("^user enters (.+) in password field$")
+    public void userEntersPasswordInPasswordField(String password) {
+        loginPage.enterPassword(password);
+        loginPage.submitCreds();
+    }
+
+    @Then("user sees landing page")
+    public void userSeesLandingPage() {
+        landingPage.open();
+        landingPage.assertLandingPage();
+    }
 }
