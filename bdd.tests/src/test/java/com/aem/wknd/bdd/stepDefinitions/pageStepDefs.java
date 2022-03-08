@@ -1,4 +1,4 @@
-package com.aem.wknd.bdd.pages;
+package com.aem.wknd.bdd.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
