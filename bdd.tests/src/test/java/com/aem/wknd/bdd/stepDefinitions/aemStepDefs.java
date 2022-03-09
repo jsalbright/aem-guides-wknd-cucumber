@@ -6,10 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import org.junit.Assert;
-import pageObjects.AssetsPage;
-import pageObjects.LandingPage;
-import pageObjects.LoginPage;
-import pageObjects.SitesPage;
+import pageObjects.*;
 import utils.TestContextSetup;
 
 import java.io.IOException;
@@ -20,6 +17,7 @@ public class aemStepDefs {
     private LoginPage loginPage;
     private LandingPage landingPage;
     private AssetsPage assetsPage;
+    private ContentPage contentPage;
 
     public aemStepDefs(TestContextSetup testContextSetup) {
         this.testContextSetup = testContextSetup;
@@ -27,6 +25,7 @@ public class aemStepDefs {
         this.landingPage = testContextSetup.pageObjectManager.getLandingPage();
         this.assetsPage = testContextSetup.pageObjectManager.getAssetsPage();
         this.sitesPage = testContextSetup.pageObjectManager.getSitesPage();
+        this.contentPage = testContextSetup.pageObjectManager.getContentPage();
     }
 
     @Given("user navigates to login page")
@@ -106,5 +105,22 @@ public class aemStepDefs {
     public void userSeesNewContentPage() {
         sitesPage.openContentPage();
         sitesPage.assertPageTitle();
+    }
+
+    @When("user selects content page")
+    public void userSelectsContentPage() {
+        contentPage.open("/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
+    }
+
+    @And("user adds asset to content page")
+    public void userAddsAssetToContentPage() {
+        contentPage.enterEditMode();
+        contentPage.toggleSidePanel();
+        contentPage.searchForAsset();
+        contentPage.dragAndDropAsset();
+    }
+
+    @Then("asset is visible on content page")
+    public void assetIsVisibleOnContentPage() {
     }
 }

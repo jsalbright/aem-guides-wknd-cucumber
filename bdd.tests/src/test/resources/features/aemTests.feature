@@ -11,11 +11,18 @@ Feature: AEM Testing
     When user attempts to crop asset
     Then asset is cropped
 
-  @sitespage
+#  @sitespage
   Scenario: User successfully authors page
     Given user is logged in and on SitesPage
     When user authors new content page
     Then user sees new content page
+
+  @sitespage
+  Scenario: User adds assets to content page
+    Given user is logged in and on SitesPage
+    When  user selects content page
+    And user adds asset to content page
+    Then  asset is visible on content page
 
 #  Scenario Outline: User successfully logs in
 #    Given user navigates to login page

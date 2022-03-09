@@ -8,6 +8,7 @@ public class PageObjectManager {
     public LoginPage loginPage;
     public AssetsPage assetsPage;
     public SitesPage sitesPage;
+    public ContentPage contentPage;
 
     public PageObjectManager(WebDriver driver) {
         this.driver = driver;
@@ -31,5 +32,10 @@ public class PageObjectManager {
     public SitesPage getSitesPage() {
         sitesPage = new SitesPage(driver);
         return sitesPage;
+    }
+
+    public ContentPage getContentPage() {
+        contentPage = new ContentPage(driver);
+        return contentPage;
     }
 }

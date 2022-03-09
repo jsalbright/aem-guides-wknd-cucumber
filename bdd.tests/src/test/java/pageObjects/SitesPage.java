@@ -11,6 +11,7 @@ import java.time.Duration;
 public class SitesPage {
     public WebDriver driver;
     private WebDriverWait wait;
+    private ContentPage contentPage;
 
     private By wkndSiteXpath = By.xpath("//div[normalize-space()='wknd-cucumber']");
     private By wkndUSFolderXpath = By.xpath("//div[@title='us']");
@@ -33,6 +34,7 @@ public class SitesPage {
     public SitesPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.contentPage = new ContentPage(driver);
     }
 
     public void open() {
@@ -76,19 +78,12 @@ public class SitesPage {
     }
 
     public void openContentPage() {
-        this.driver.navigate().to("http://localhost:4502" + "/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
+        contentPage.open("/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
     }
 
     public void assertPageTitle() {
-        String pageTitle = this.driver.getTitle();
+        String pageTitle = contentPage.getPageTitle();
         Assert.assertEquals("Hello-World", pageTitle);
-//        deleteContentPage();
     }
 
-    public void deleteContentPage() {
-        selectEnglishSite();
-        this.driver.findElement(testContentPageXpath).click();
-        this.driver.findElement(moreButtonSelector).click();
-        this.driver.findElement(deleteContentPageButtonXpath).click();
-    }
 }
