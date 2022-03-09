@@ -25,7 +25,7 @@ public class TestBase {
             if (prop.getProperty("browser").equalsIgnoreCase("chrome")){
                 System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
                 options = new ChromeOptions();
-                options.addArguments("--headless");
+//                options.addArguments("--headless");
                 options.addArguments("--start-maximized");
               driver = new ChromeDriver(options);
 //                driver = new ChromeDriver();

@@ -19,7 +19,9 @@ public class ContentPage {
     private By toggleSidePanelButtonId = By.id("sidepanel-toggle-button");
     private By assetSearchFieldId = By.id("assetsearch");
     private By selectedAssetXpath = By.xpath("//*[@id=\"coral-id-15\"]/coral-panel-content/div/div[2]/coral-masonry/coral-masonry-item/coral-card");
-    private By editableDropAreaXpath = By.xpath("//div[@class='cq-Overlay cq-Overlay--component cq-droptarget cq-Overlay--placeholder js-cq-droptarget--enabled is-hover']");
+    private By editableDropAreaSelector = By.cssSelector("#OverlayWrapper > div.cq-Overlay.cq-Overlay--component.cq-Overlay--container > div");
+    private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
+    private By addedImageSelector = By.cssSelector("node[data-asset = '/content/dam/wknd-cucumber/asset.jpg']");
 // //div[@class='cq-Overlay cq-Overlay--component cq-droptarget cq-Overlay--placeholder js-cq-droptarget--enabled is-hover']
 //     #coral-id-15 > coral-panel-content > div > div.content-panel.editor-SidePanel-results > coral-masonry > coral-masonry-item > coral-card
 // coral-card[class='editor-Card-asset card-asset cq-draggable u-coral-openHand coral3-Card'] coral-card-info
@@ -58,9 +60,16 @@ public class ContentPage {
 
     public void dragAndDropAsset() {
         WebElement from = driver.findElement(selectedAssetXpath);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaXpath));
-        WebElement to = driver.findElement(editableDropAreaXpath);
+        wait.until(ExpectedConditions.presenceOfElementLocated(editableDropAreaSelector));
+        WebElement to = driver.findElement(editableDropAreaSelector);
         builder.dragAndDrop(from, to).perform();
+        wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
+        this.driver.findElement(previewButtonXpath).click();
+
+    }
+
+    public void assertAssetVisible() {
+        Assert.assertNotNull(this.driver.findElement(addedImageSelector));
     }
 
 //    public void deleteContentPage() {
