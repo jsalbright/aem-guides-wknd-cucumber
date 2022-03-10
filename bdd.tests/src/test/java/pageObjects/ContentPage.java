@@ -18,13 +18,11 @@ public class ContentPage {
     private By editButtonXpath = By.xpath("//button[contains(text(),'Edit')]");
     private By toggleSidePanelButtonId = By.id("sidepanel-toggle-button");
     private By assetSearchFieldId = By.id("assetsearch");
-    private By selectedAssetXpath = By.xpath("//*[@id=\"coral-id-15\"]/coral-panel-content/div/div[2]/coral-masonry/coral-masonry-item/coral-card");
-    private By editableDropAreaSelector = By.cssSelector("#OverlayWrapper > div.cq-Overlay.cq-Overlay--component.cq-Overlay--container > div");
+    private By selectedAssetSelector = By.cssSelector("[data-path=\"/content/dam/wknd-cucumber/asset.jpg\"]");
+    private By editableDropAreaSelector = By.cssSelector("[title=\"Container [Root]\"]");
     private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
-    private By addedImageSelector = By.cssSelector("node[data-asset = '/content/dam/wknd-cucumber/asset.jpg']");
-// //div[@class='cq-Overlay cq-Overlay--component cq-droptarget cq-Overlay--placeholder js-cq-droptarget--enabled is-hover']
-//     #coral-id-15 > coral-panel-content > div > div.content-panel.editor-SidePanel-results > coral-masonry > coral-masonry-item > coral-card
-// coral-card[class='editor-Card-asset card-asset cq-draggable u-coral-openHand coral3-Card'] coral-card-info
+    private By addedImageSelector = By.cssSelector("[data-asset=\"/content/dam/wknd-cucumber/asset.jpg\"]");
+
     private WebDriverWait wait;
 
     public ContentPage(WebDriver driver) {
@@ -59,17 +57,22 @@ public class ContentPage {
     }
 
     public void dragAndDropAsset() {
-        WebElement from = driver.findElement(selectedAssetXpath);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
+        WebElement from = driver.findElement(selectedAssetSelector);
         wait.until(ExpectedConditions.presenceOfElementLocated(editableDropAreaSelector));
         WebElement to = driver.findElement(editableDropAreaSelector);
         builder.dragAndDrop(from, to).perform();
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
         this.driver.findElement(previewButtonXpath).click();
-
     }
 
     public void assertAssetVisible() {
+        // Have to switch to iframe otherwise driver fails to find element
+        driver.switchTo().frame(driver.findElement(By.id("ContentFrame")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(addedImageSelector));
         Assert.assertNotNull(this.driver.findElement(addedImageSelector));
+        // Switch back to primary driver from iframe
+        driver.switchTo().defaultContent();
     }
 
 //    public void deleteContentPage() {

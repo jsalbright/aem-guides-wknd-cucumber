@@ -122,5 +122,6 @@ public class aemStepDefs {
 
     @Then("asset is visible on content page")
     public void assetIsVisibleOnContentPage() {
+        contentPage.assertAssetVisible();
     }
 }
