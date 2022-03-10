@@ -29,7 +29,6 @@ public class ContentPage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.builder = new Actions(driver);
-//        this.driver.manage().window().maximize();
     }
 
     public void open(String url) {
@@ -57,9 +56,9 @@ public class ContentPage {
     }
 
     public void dragAndDropAsset() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(selectedAssetSelector));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
         WebElement from = driver.findElement(selectedAssetSelector);
-        wait.until(ExpectedConditions.presenceOfElementLocated(editableDropAreaSelector));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
         WebElement to = driver.findElement(editableDropAreaSelector);
         builder.dragAndDrop(from, to).perform();
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
