@@ -11,7 +11,7 @@ Feature: AEM Testing
     When user attempts to crop asset
     Then asset is cropped
 
-#  @sitespage
+  @sitespage
   Scenario: User successfully authors page
     Given user is logged in and on SitesPage
     When user authors new content page

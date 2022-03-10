@@ -123,6 +123,13 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
         </dependency>
+        <!-- Automatic WebDriver management and installation -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.1.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
