@@ -19,10 +19,11 @@ public class ContentPage {
     private By toggleSidePanelButtonId = By.id("sidepanel-toggle-button");
     private By assetSearchFieldId = By.id("assetsearch");
     private By selectedAssetSelector = By.cssSelector("[data-path=\"/content/dam/wknd-cucumber/asset.jpg\"]");
-    private By editableDropAreaSelector = By.cssSelector("[title=\"Container [Root]\"] div");
+    private By editableDropAreaSelector = By.cssSelector("[data-text=\"Drag components here\"]");
     private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
     private By addedImageSelector = By.cssSelector("[data-asset=\"/content/dam/wknd-cucumber/asset.jpg\"]");
-    // [title=\"Container [Root]\"] div
+    // [data-text="Drag components here"]
+    // [title="Container [Root]"]
 
     private WebDriverWait wait;
 
@@ -30,7 +31,7 @@ public class ContentPage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.builder = new Actions(driver);
-        this.driver.manage().window().maximize();
+//        this.driver.manage().window().maximize();
     }
 
     public void open(String url) {
@@ -58,9 +59,9 @@ public class ContentPage {
     }
 
     public void dragAndDropAsset() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
+        wait.until(ExpectedConditions.presenceOfElementLocated(selectedAssetSelector));
         WebElement from = driver.findElement(selectedAssetSelector);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
+        wait.until(ExpectedConditions.presenceOfElementLocated(editableDropAreaSelector));
         WebElement to = driver.findElement(editableDropAreaSelector);
         builder.dragAndDrop(from, to).perform();
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
