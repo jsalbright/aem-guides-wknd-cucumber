@@ -28,8 +28,10 @@ public class SitesPage {
     private By testContentPageXpath = By.xpath("//coral-columnview-item-thumbnail[@id='coral-id-13']");
     private By moreButtonSelector = By.cssSelector("coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']");
     private By deleteContentPageButtonXpath = By.xpath("//span[normalize-space()='(backspace)']");
-
-//    coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']
+    // //div[@title='en']
+    // //*[@id="coral-id-27"]/div
+    // div[title='en']
+    // #coral-id-27 > div
 
     public SitesPage(WebDriver driver) {
         this.driver = driver;
@@ -38,17 +40,17 @@ public class SitesPage {
     }
 
     public void open() {
-        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content");
+        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content/wknd-cucumber/us/en");
     }
 
     public void selectEnglishSite() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(wkndSiteXpath));
+        wait.until(ExpectedConditions.elementToBeClickable(wkndSiteXpath));
         this.driver.findElement(wkndSiteXpath).click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(wkndUSFolderXpath));
+        wait.until(ExpectedConditions.elementToBeClickable(wkndUSFolderXpath));
         this.driver.findElement(wkndUSFolderXpath).click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(wkndENFolderXpath));
+        wait.until(ExpectedConditions.elementToBeClickable(wkndENFolderXpath));
         this.driver.findElement(wkndENFolderXpath).click();
     }
 
