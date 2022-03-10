@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
         },
         features = { "classpath:features" }, // location of feature files
         glue = { "com.aem.wknd.bdd.stepDefinitions" },// location of step
-        tags = "@sitespage or @sampleTest"
+        tags = "@sitespage"
         ) // specific tags to execute
 // implementation
 

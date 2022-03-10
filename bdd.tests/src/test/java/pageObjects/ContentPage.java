@@ -18,8 +18,8 @@ public class ContentPage {
     private By editButtonXpath = By.xpath("//button[contains(text(),'Edit')]");
     private By toggleSidePanelButtonId = By.id("sidepanel-toggle-button");
     private By assetSearchFieldId = By.id("assetsearch");
-    private By selectedAssetSelector = By.cssSelector("[data-path=\"/content/dam/wknd-cucumber/asset.jpg\"]");
-    private By editableDropAreaSelector = By.cssSelector("[title=\"Container [Root]\"]");
+    private By selectedAssetSelector = By.cssSelector("[data-path=\"/content/dam/wknd-cucumber/asset.jpg\"] div");
+    private By editableDropAreaSelector = By.cssSelector("#OverlayWrapper > div.cq-Overlay.cq-Overlay--component.cq-Overlay--container > div");
     private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
     private By addedImageSelector = By.cssSelector("[data-asset=\"/content/dam/wknd-cucumber/asset.jpg\"]");
 
@@ -59,7 +59,7 @@ public class ContentPage {
     public void dragAndDropAsset() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
         WebElement from = driver.findElement(selectedAssetSelector);
-        wait.until(ExpectedConditions.presenceOfElementLocated(editableDropAreaSelector));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
         WebElement to = driver.findElement(editableDropAreaSelector);
         builder.dragAndDrop(from, to).perform();
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
