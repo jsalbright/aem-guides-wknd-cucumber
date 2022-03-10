@@ -22,8 +22,6 @@ public class ContentPage {
     private By editableDropAreaSelector = By.cssSelector("[data-text=\"Drag components here\"]");
     private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
     private By addedImageSelector = By.cssSelector("[data-asset=\"/content/dam/wknd-cucumber/asset.jpg\"]");
-    // [data-text="Drag components here"]
-    // [title="Container [Root]"]
 
     private WebDriverWait wait;
 

@@ -52,6 +52,7 @@ public class TestBase {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments(browserMode);
+        options.addArguments("--window-size=1920,1080");
         driver = new ChromeDriver(options);
         this.driver = driver;
 
