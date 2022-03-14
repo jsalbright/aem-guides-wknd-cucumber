@@ -116,11 +116,12 @@ public class aemStepDefs {
         contentPage.enterEditMode();
         contentPage.toggleSidePanel();
         contentPage.searchForAsset();
-        contentPage.dragAndDropAsset();
+//        contentPage.dragAndDropAsset();
     }
 
     @Then("asset is visible on content page")
     public void assetIsVisibleOnContentPage() {
-        contentPage.assertAssetVisible();
+//        contentPage.assertAssetVisible();
+        contentPage.deleteContentPage("Hello-World");
     }
 }

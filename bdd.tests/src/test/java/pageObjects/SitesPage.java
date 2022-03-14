@@ -25,13 +25,6 @@ public class SitesPage {
     private By pageTitleInputName = By.name("./pageTitle");
     private By navTitleInputName = By.name("./navTitle");
     private By createPageButtonXpath = By.xpath("//coral-button-label[normalize-space()='Create']");
-    private By testContentPageXpath = By.xpath("//coral-columnview-item-thumbnail[@id='coral-id-13']");
-    private By moreButtonSelector = By.cssSelector("coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']");
-    private By deleteContentPageButtonXpath = By.xpath("//span[normalize-space()='(backspace)']");
-    // //div[@title='en']
-    // //*[@id="coral-id-27"]/div
-    // div[title='en']
-    // #coral-id-27 > div
 
     public SitesPage(WebDriver driver) {
         this.driver = driver;

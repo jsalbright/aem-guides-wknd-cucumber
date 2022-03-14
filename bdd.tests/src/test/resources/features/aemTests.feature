@@ -5,7 +5,7 @@ Feature: AEM Testing
     When user logs in as admin
     Then user sees admin landing page
 
-  @sitespage
+#  @sitespage
   Scenario: User successfully crops asset
     Given user is logged in and on AssetsPage
     And searches for asset with keyword "asset"

@@ -23,6 +23,9 @@ public class ContentPage {
     private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
     private By addedImageSelector = By.cssSelector("[data-asset=\"/content/dam/wknd-cucumber/asset.jpg\"]");
 
+    private By moreButtonSelector = By.cssSelector("coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']");
+    private By deleteContentPageButtonSelector = By.cssSelector("button[trackingelement=\"delete\"]");
+
     private WebDriverWait wait;
 
     public ContentPage(WebDriver driver) {
@@ -74,10 +77,17 @@ public class ContentPage {
         driver.switchTo().defaultContent();
     }
 
-//    public void deleteContentPage() {
-//        selectEnglishSite();
-//        this.driver.findElement(testContentPageXpath).click();
-//        this.driver.findElement(moreButtonSelector).click();
-//        this.driver.findElement(deleteContentPageButtonXpath).click();
-//    }
+    public void deleteContentPage(String pageTitle) {
+//        By contentPageXpath = By.xpath("//div[@title=\"" + pageTitle + "\"]");
+        By contentPageXpath = By.xpath("//coral-columnview-item-thumbnail[@id='coral-id-97']");
+        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content/wknd-cucumber/us/en");
+
+        // #coral-id-97
+        // //coral-columnview-item-thumbnail[@id='coral-id-97']
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(contentPageXpath));
+        this.driver.findElement(contentPageXpath).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(deleteContentPageButtonSelector));
+        this.driver.findElement(deleteContentPageButtonSelector).click();
+    }
 }
