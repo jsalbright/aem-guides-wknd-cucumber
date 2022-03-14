@@ -3,6 +3,8 @@ package pageObjects;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,11 +27,7 @@ public class SitesPage {
     private By pageTitleInputName = By.name("./pageTitle");
     private By navTitleInputName = By.name("./navTitle");
     private By createPageButtonXpath = By.xpath("//coral-button-label[normalize-space()='Create']");
-
-    private By deleteContentPageButtonSelector = By.cssSelector("button[trackingelement=\"delete\"]");
-    private By pageXpath = By.xpath("//*[@src=\"/content/wknd-cucumber/us/en/Hello-Name.thumb.48.48.png?ck=\"]/..");
-    private By deleteButtonXpath = By.xpath("/html/body/coral-dialog/div[2]/coral-dialog-footer/button[2]/coral-button-label");
-    private By archiveCheckBoxXpath = By.xpath("//input[@name=\"archive\"]");
+    private By doneButtonXpath = By.xpath("//coral-button-label[text()=\"Done\"]/..");
 
     public SitesPage(WebDriver driver) {
         this.driver = driver;
@@ -41,15 +39,18 @@ public class SitesPage {
         this.driver.navigate().to("http://localhost:4502" + "/sites.html/content");
     }
 
-    public void selectEnglishSite() {
-        wait.until(ExpectedConditions.elementToBeClickable(wkndSiteXpath));
+    public void selectEnglishSite() throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(wkndSiteXpath));
         this.driver.findElement(wkndSiteXpath).click();
 
-        wait.until(ExpectedConditions.elementToBeClickable(wkndUSFolderXpath));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(wkndUSFolderXpath));
         this.driver.findElement(wkndUSFolderXpath).click();
 
-        wait.until(ExpectedConditions.elementToBeClickable(wkndENFolderXpath));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(wkndENFolderXpath));
         this.driver.findElement(wkndENFolderXpath).click();
+
+        // Needed to allow URL to update fully
+        Thread.sleep(500);
     }
 
     public void clickCreateButton() {
@@ -75,6 +76,8 @@ public class SitesPage {
 
     public void publishContentPage() {
         this.driver.findElement(createPageButtonXpath).click();
+        wait.until(ExpectedConditions.elementToBeClickable(doneButtonXpath));
+        this.driver.findElement(doneButtonXpath).click();
     }
 
     public void openContentPage() {
@@ -86,9 +89,9 @@ public class SitesPage {
         Assert.assertEquals("Hello-World", pageTitle);
     }
 
-    public void deletePage(String pageTitle) {
-        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content");
+    public void deletePage(String pageTitle) throws InterruptedException {
+        open();
         selectEnglishSite();
-        contentPage.deleteContentPage("Hello-World");
+        contentPage.deletePage("Hello-World");
     }
 }

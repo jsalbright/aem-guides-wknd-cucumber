@@ -93,7 +93,7 @@ public class aemStepDefs {
     }
 
     @When("user authors new content page")
-    public void userAuthorsNewContentPage() {
+    public void userAuthorsNewContentPage() throws InterruptedException {
         sitesPage.selectEnglishSite();
         sitesPage.clickCreateButton();
         sitesPage.createContentPage();
@@ -117,12 +117,12 @@ public class aemStepDefs {
         contentPage.enterEditMode();
         contentPage.toggleSidePanel();
         contentPage.searchForAsset();
-        //contentPage.dragAndDropAsset();
+        contentPage.dragAndDropAsset();
     }
 
     @Then("asset is visible on content page")
-    public void assetIsVisibleOnContentPage() {
-        //contentPage.assertAssetVisible();
+    public void assetIsVisibleOnContentPage() throws InterruptedException {
+        contentPage.assertAssetVisible();
         sitesPage.deletePage("Hello-World");
     }
 }

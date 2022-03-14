@@ -1,10 +1,7 @@
 package pageObjects;
 
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -61,13 +58,29 @@ public class ContentPage {
     }
 
     public void dragAndDropAsset() {
+        System.out.print(1);
         wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
         WebElement from = driver.findElement(selectedAssetSelector);
+        System.out.print(2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
         WebElement to = driver.findElement(editableDropAreaSelector);
-        builder.dragAndDrop(from, to).perform();
+        System.out.print(3);
+
+
+        int attempts = 0;
+        while (attempts < 2) {
+            try {
+                builder.dragAndDrop(from, to).perform();
+            } catch(StaleElementReferenceException e) {
+                System.out.println(e);
+            }
+            attempts++;
+        }
+
+        System.out.print(4);
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
         this.driver.findElement(previewButtonXpath).click();
+        System.out.print(5);
     }
 
     public void assertAssetVisible() {
@@ -79,7 +92,7 @@ public class ContentPage {
         driver.switchTo().defaultContent();
     }
 
-    public void deleteContentPage(String pageTitle) {
+    public void deletePage(String pageTitle) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(contentPageXpath));
         this.driver.findElement(contentPageXpath).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteContentPageButtonSelector));
