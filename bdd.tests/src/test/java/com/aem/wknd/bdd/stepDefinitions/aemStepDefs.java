@@ -94,6 +94,7 @@ public class aemStepDefs {
 
     @When("user authors new content page")
     public void userAuthorsNewContentPage() {
+        sitesPage.selectEnglishSite();
         sitesPage.clickCreateButton();
         sitesPage.createContentPage();
         sitesPage.enterPageDetails();
@@ -116,12 +117,12 @@ public class aemStepDefs {
         contentPage.enterEditMode();
         contentPage.toggleSidePanel();
         contentPage.searchForAsset();
-        contentPage.dragAndDropAsset();
+        //contentPage.dragAndDropAsset();
     }
 
     @Then("asset is visible on content page")
     public void assetIsVisibleOnContentPage() {
-        contentPage.assertAssetVisible();
-        contentPage.deleteContentPage("Hello-World");
+        //contentPage.assertAssetVisible();
+        sitesPage.deletePage("Hello-World");
     }
 }

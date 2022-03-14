@@ -23,10 +23,10 @@ public class ContentPage {
     private By previewButtonXpath = By.xpath("//coral-button-label[normalize-space()='Preview']");
     private By addedImageSelector = By.cssSelector("[data-asset=\"/content/dam/wknd-cucumber/asset.jpg\"]");
 
-    private By moreButtonSelector = By.cssSelector("coral-actionbar-primary[role='toolbar'] coral-icon[aria-label='more']");
     private By deleteContentPageButtonSelector = By.cssSelector("button[trackingelement=\"delete\"]");
-    private By contentPageCss = By.cssSelector("[src=\"/content/wknd-cucumber/us/en/Hello-Name.thumb.48.48.png?ck=\"]");
+    private By contentPageXpath = By.xpath("//*[@src=\"/content/wknd-cucumber/us/en/Hello-Name.thumb.48.48.png?ck=\"]/..");
     private By deleteButtonXpath = By.xpath("/html/body/coral-dialog/div[2]/coral-dialog-footer/button[2]/coral-button-label");
+    private By archiveCheckBoxXpath = By.xpath("//input[@name=\"archive\"]");
 
     private WebDriverWait wait;
 
@@ -80,12 +80,13 @@ public class ContentPage {
     }
 
     public void deleteContentPage(String pageTitle) {
-        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content/wknd-cucumber/us/en");
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(contentPageCss));
-        this.driver.findElement(contentPageCss).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(contentPageXpath));
+        this.driver.findElement(contentPageXpath).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteContentPageButtonSelector));
         this.driver.findElement(deleteContentPageButtonSelector).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(archiveCheckBoxXpath));
+        this.driver.findElement(archiveCheckBoxXpath).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteButtonXpath));
         this.driver.findElement(deleteButtonXpath).click();

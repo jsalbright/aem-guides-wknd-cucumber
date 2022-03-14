@@ -26,6 +26,11 @@ public class SitesPage {
     private By navTitleInputName = By.name("./navTitle");
     private By createPageButtonXpath = By.xpath("//coral-button-label[normalize-space()='Create']");
 
+    private By deleteContentPageButtonSelector = By.cssSelector("button[trackingelement=\"delete\"]");
+    private By pageXpath = By.xpath("//*[@src=\"/content/wknd-cucumber/us/en/Hello-Name.thumb.48.48.png?ck=\"]/..");
+    private By deleteButtonXpath = By.xpath("/html/body/coral-dialog/div[2]/coral-dialog-footer/button[2]/coral-button-label");
+    private By archiveCheckBoxXpath = By.xpath("//input[@name=\"archive\"]");
+
     public SitesPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -33,7 +38,7 @@ public class SitesPage {
     }
 
     public void open() {
-        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content/wknd-cucumber/us/en");
+        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content");
     }
 
     public void selectEnglishSite() {
@@ -81,4 +86,9 @@ public class SitesPage {
         Assert.assertEquals("Hello-World", pageTitle);
     }
 
+    public void deletePage(String pageTitle) {
+        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content");
+        selectEnglishSite();
+        contentPage.deleteContentPage("Hello-World");
+    }
 }
