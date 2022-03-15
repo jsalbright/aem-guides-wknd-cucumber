@@ -13,7 +13,6 @@ import java.time.Duration;
 public class AssetsPage {
     public WebDriver driver;
 
-    private By classNavigationTitle = By.className("granite-title");
     private By wkndCucumberFolderXpathHref = By.xpath("//a[@href='/assets.html/content/dam/wknd-cucumber']");
     private By searchButtonXpath = By.xpath("//coral-icon[@aria-label='search']");
     private By searchInputXpath = By.xpath("//input[@placeholder='Type to search ...']");
@@ -34,11 +33,6 @@ public class AssetsPage {
 
     public void open() {
         this.driver.navigate().to("http://localhost:4502" + "/assets.html/content/dam");
-    }
-
-    public void assertLandingPage() {
-        String navigationTitle = driver.findElement(classNavigationTitle).getText();
-        Assert.assertEquals("Navigation", navigationTitle);
     }
 
     public void selectWkndCucumberFolder() {

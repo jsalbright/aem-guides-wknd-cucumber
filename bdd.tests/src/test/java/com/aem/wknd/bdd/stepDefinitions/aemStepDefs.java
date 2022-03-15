@@ -69,23 +69,6 @@ public class aemStepDefs {
         assetsPage.confirmAssetCrop();
     }
 
-//    @When("^user enters (.+) in username field$")
-//    public void userEntersUserNameInUsernameField(String username) {
-//        loginPage.enterUsername(username);
-//    }
-//
-//    @And("^user enters (.+) in password field$")
-//    public void userEntersPasswordInPasswordField(String password) {
-//        loginPage.enterPassword(password);
-//        loginPage.submitCreds();
-//    }
-//
-//    @Then("user sees landing page")
-//    public void userSeesLandingPage() {
-//        landingPage.open();
-//        landingPage.assertLandingPage();
-//    }
-
     @Given("user is logged in and on SitesPage")
     public void userIsLoggedInAndOnSitesPage() {
         userLogsInAsAdmin();
@@ -103,13 +86,16 @@ public class aemStepDefs {
 
     @Then("user sees new content page")
     public void userSeesNewContentPage() {
-        sitesPage.openContentPage();
-        sitesPage.assertPageTitle();
+        contentPage.open();
+        contentPage.assertPageTitle();
     }
 
-    @When("user selects content page")
-    public void userSelectsContentPage() {
-        contentPage.open("/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
+    @When("user opens content page")
+    public void userOpensContentPage() throws InterruptedException {
+        sitesPage.selectEnglishSite();
+        sitesPage.selectChildPage();
+        sitesPage.clickEditButton();
+        testContextSetup.genericUtils.SwitchWindowToChild();
     }
 
     @And("user adds asset to content page")
@@ -123,6 +109,8 @@ public class aemStepDefs {
     @Then("asset is visible on content page")
     public void assetIsVisibleOnContentPage() throws InterruptedException {
         contentPage.assertAssetVisible();
-        sitesPage.deletePage("Hello-World");
+
+        // TODO Cleanup, need to find better solution
+        sitesPage.deleteChildPage();
     }
 }

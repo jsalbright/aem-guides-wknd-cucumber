@@ -15,6 +15,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestBase {
     public WebDriver driver;
+    public String baseUrl;
 
     public WebDriver WebDriverManager() throws IOException {
 
@@ -29,6 +30,7 @@ public class TestBase {
             System.err.println("No global.properties file found!");
             System.exit(1);
         }
+        baseUrl = prop.getProperty("url");
         String url = prop.getProperty("url");
         String browserMode = prop.getProperty("headless").equalsIgnoreCase("true") ? "headless" : "--start-minimized";
 
@@ -52,7 +54,7 @@ public class TestBase {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments(browserMode);
-        options.addArguments("--window-size=1920,1080");
+        options.addArguments("window-size=1920,1080");
         driver = new ChromeDriver(options);
         this.driver = driver;
 

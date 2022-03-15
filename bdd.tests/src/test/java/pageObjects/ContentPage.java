@@ -1,5 +1,6 @@
 package pageObjects;
 
+import io.cucumber.java.mk_latn.No;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -33,12 +34,8 @@ public class ContentPage {
         this.builder = new Actions(driver);
     }
 
-    public void open(String url) {
-        this.driver.navigate().to("http://localhost:4502" + url);
-    }
-
-    public String getPageTitle() {
-        return this.driver.getTitle();
+    public void open() {
+        this.driver.navigate().to("http://localhost:4502" + "/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
     }
 
     public void enterEditMode() {
@@ -59,20 +56,26 @@ public class ContentPage {
 
     public void dragAndDropAsset() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
-        WebElement from = driver.findElement(selectedAssetSelector);
         wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
-        WebElement to = driver.findElement(editableDropAreaSelector);
+        builder.dragAndDrop(driver.findElement(selectedAssetSelector), driver.findElement(editableDropAreaSelector)).perform();
 
-        // Added to troubleshoot StaleelementReferrenceException
-        int attempts = 0;
-        while (attempts < 5) {
-            try {
-                builder.dragAndDrop(from, to).perform();
-            } catch(StaleElementReferenceException e) {
-                System.out.println(e);
-            }
-            attempts++;
-        }
+//        boolean notFound = true;
+//        int i = 0;
+//        while (notFound && i < 10) {
+//           try {
+//               builder.dragAndDrop(driver.findElement(selectedAssetSelector), driver.findElement(editableDropAreaSelector)).perform();
+//               notFound = false;
+//           } catch (StaleElementReferenceException ser) {
+//               System.out.println("WARNING: Stale element detected - retrying");
+//               notFound = true;
+//           } catch (NoSuchElementException nse) {
+//               System.out.println("ERROR: No such element");
+//               notFound = true;
+//           } catch ( Exception e) {
+//               System.out.println(e.getMessage());
+//           }
+//           i++;
+//        }
 
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
         this.driver.findElement(previewButtonXpath).click();
@@ -87,7 +90,11 @@ public class ContentPage {
         driver.switchTo().defaultContent();
     }
 
-    public void deletePage(String pageTitle) {
+    public void assertPageTitle() {
+        Assert.assertEquals("Hello-World", driver.getTitle());
+    }
+
+    public void deletePage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(contentPageXpath));
         this.driver.findElement(contentPageXpath).click();
 
