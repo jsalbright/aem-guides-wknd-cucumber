@@ -58,17 +58,14 @@ public class ContentPage {
     }
 
     public void dragAndDropAsset() {
-        System.out.print(1);
         wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
         WebElement from = driver.findElement(selectedAssetSelector);
-        System.out.print(2);
         wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
         WebElement to = driver.findElement(editableDropAreaSelector);
-        System.out.print(3);
 
-
+        // Added to troubleshoot StaleelementReferrenceException
         int attempts = 0;
-        while (attempts < 2) {
+        while (attempts < 5) {
             try {
                 builder.dragAndDrop(from, to).perform();
             } catch(StaleElementReferenceException e) {
@@ -77,10 +74,8 @@ public class ContentPage {
             attempts++;
         }
 
-        System.out.print(4);
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
         this.driver.findElement(previewButtonXpath).click();
-        System.out.print(5);
     }
 
     public void assertAssetVisible() {
@@ -95,6 +90,7 @@ public class ContentPage {
     public void deletePage(String pageTitle) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(contentPageXpath));
         this.driver.findElement(contentPageXpath).click();
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(deleteContentPageButtonSelector));
         this.driver.findElement(deleteContentPageButtonSelector).click();
 
