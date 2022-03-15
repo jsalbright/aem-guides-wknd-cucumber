@@ -1,4 +1,4 @@
-package com.aem.wknd.bdd;
+package com.aem.wknd.bdd.stepDefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;

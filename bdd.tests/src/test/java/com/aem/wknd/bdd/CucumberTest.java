@@ -16,7 +16,9 @@ import org.junit.runner.RunWith;
                    "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" // generates Extent Reports
         },
         features = { "classpath:features" }, // location of feature files
-        glue = { "com.aem.wknd.bdd.stepDefinitions" }) // location of step
+        glue = { "com.aem.wknd.bdd.stepDefinitions" },// location of step
+        tags = "@sitespage" // specific tags to execute
+        )
 // implementation
 
 public class CucumberTest {
