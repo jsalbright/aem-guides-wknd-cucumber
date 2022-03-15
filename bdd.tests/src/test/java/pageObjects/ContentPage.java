@@ -6,8 +6,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.FileUtils;
 
 import java.time.Duration;
+import java.util.Properties;
 
 public class ContentPage {
     public WebDriver driver;
@@ -35,7 +37,8 @@ public class ContentPage {
     }
 
     public void open() {
-        this.driver.navigate().to("http://localhost:4502" + "/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
+        Properties prop = FileUtils.getGlobalProperties();
+        this.driver.navigate().to(prop.getProperty("url") + "/editor.html/content/wknd-cucumber/us/en/Hello-Name.html");
     }
 
     public void enterEditMode() {
@@ -57,25 +60,25 @@ public class ContentPage {
     public void dragAndDropAsset() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(selectedAssetSelector));
         wait.until(ExpectedConditions.visibilityOfElementLocated(editableDropAreaSelector));
-        builder.dragAndDrop(driver.findElement(selectedAssetSelector), driver.findElement(editableDropAreaSelector)).perform();
+        //builder.dragAndDrop(driver.findElement(selectedAssetSelector), driver.findElement(editableDropAreaSelector)).perform();
 
-//        boolean notFound = true;
-//        int i = 0;
-//        while (notFound && i < 10) {
-//           try {
-//               builder.dragAndDrop(driver.findElement(selectedAssetSelector), driver.findElement(editableDropAreaSelector)).perform();
-//               notFound = false;
-//           } catch (StaleElementReferenceException ser) {
-//               System.out.println("WARNING: Stale element detected - retrying");
-//               notFound = true;
-//           } catch (NoSuchElementException nse) {
-//               System.out.println("ERROR: No such element");
-//               notFound = true;
-//           } catch ( Exception e) {
-//               System.out.println(e.getMessage());
-//           }
-//           i++;
-//        }
+        boolean notFound = true;
+        int i = 0;
+        while (notFound && i < 10) {
+           try {
+               builder.dragAndDrop(driver.findElement(selectedAssetSelector), driver.findElement(editableDropAreaSelector)).perform();
+               notFound = false;
+           } catch (StaleElementReferenceException ser) {
+               System.out.println("WARNING: Stale element detected - retrying");
+               notFound = true;
+           } catch (NoSuchElementException nse) {
+               System.out.println("ERROR: No such element");
+               notFound = true;
+           } catch ( Exception e) {
+               System.out.println(e.getMessage());
+           }
+           i++;
+        }
 
         wait.until(ExpectedConditions.elementToBeClickable(previewButtonXpath));
         this.driver.findElement(previewButtonXpath).click();

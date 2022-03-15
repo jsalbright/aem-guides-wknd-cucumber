@@ -7,7 +7,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -15,22 +14,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestBase {
     public WebDriver driver;
-    public String baseUrl;
 
     public WebDriver WebDriverManager() throws IOException {
-
-        FileInputStream fis = null;
-        Properties prop = null;
-
-        try {
-            fis = new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/global.properties");
-            prop = new Properties();
-            prop.load(fis);
-        }catch(FileNotFoundException ex){
-            System.err.println("No global.properties file found!");
-            System.exit(1);
-        }
-        baseUrl = prop.getProperty("url");
+        Properties prop = FileUtils.getGlobalProperties();
         String url = prop.getProperty("url");
         String browserMode = prop.getProperty("headless").equalsIgnoreCase("true") ? "headless" : "--start-minimized";
 
@@ -54,7 +40,7 @@ public class TestBase {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments(browserMode);
-        options.addArguments("window-size=1920,1080");
+        options.addArguments("--window-size=1920,1080");
         driver = new ChromeDriver(options);
         this.driver = driver;
 
@@ -66,6 +52,8 @@ public class TestBase {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments(browserMode);
+        options.addArguments("--width=1920");
+        options.addArguments("--height=1080");
         driver = new FirefoxDriver(options);
         this.driver = driver;
 
