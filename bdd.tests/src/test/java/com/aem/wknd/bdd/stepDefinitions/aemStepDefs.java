@@ -1,56 +1,111 @@
 package com.aem.wknd.bdd.stepDefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.*;
+import utils.TestContextSetup;
 
-import java.time.Duration;
+import java.io.IOException;
 
 public class aemStepDefs {
-    public WebDriver driver;
+    private SitesPage sitesPage;
+    private TestContextSetup testContextSetup;
+    private LoginPage loginPage;
+    private LandingPage landingPage;
+    private AssetsPage assetsPage;
+    private ContentPage contentPage;
+
+    public aemStepDefs(TestContextSetup testContextSetup) {
+        this.testContextSetup = testContextSetup;
+        this.loginPage = testContextSetup.pageObjectManager.getLoginPage();
+        this.landingPage = testContextSetup.pageObjectManager.getLandingPage();
+        this.assetsPage = testContextSetup.pageObjectManager.getAssetsPage();
+        this.sitesPage = testContextSetup.pageObjectManager.getSitesPage();
+        this.contentPage = testContextSetup.pageObjectManager.getContentPage();
+    }
 
     @Given("user navigates to login page")
     public void userNavigatesToLoginPage() {
-        System.setProperty("webdriver.chrome.driver","/usr/local/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
-        driver.get("http://localhost:4502");
+        Assert.assertNotNull(loginPage);
     }
 
     @When("user logs in as admin")
     public void userLogsInAsAdmin() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
-        driver.findElement(By.id("username")).sendKeys("admin");
-        driver.findElement(By.id("password")).sendKeys("admin");
-        driver.findElement(By.id("submit-button")).click();
+        loginPage.enterUsername("admin");
+        loginPage.enterPassword("admin");
+        loginPage.submitCreds();
     }
 
     @Then("user sees admin landing page")
-    public void userSeesAdminLandingPage() {
-        String titleText = driver.findElement(By.className("granite-title")).getText();
-        Assert.assertEquals("Navigation", titleText);
-        driver.close();
+    public void userSeesAdminLandingPage() throws IOException {
+        landingPage.open();
+        landingPage.assertLandingPage();
     }
 
-    @Given("user is logged in as admin")
-    public void userIsLoggedInAsAdmin() {
+    @Given("user is logged in and on AssetsPage")
+    public void userIsLoggedInAndOnAssetsPage() {
+        assetsPage.open();
     }
 
-    @When("user creates a new page object")
-    public void userCreatesANewPageObject() {
+    @And("searches for asset with keyword {string}")
+    public void searchesForAssetWithKeyword(String keyword) {
+        assetsPage.selectWkndCucumberFolder();
+        assetsPage.searchForAsset(keyword);
+        assetsPage.selectFirstAsset();
     }
 
-    @Then("user sees new page")
-    public void userSeesNewPage() {
+    @When("user attempts to crop asset")
+    public void userAttemptsToCropAsset() {
+        assetsPage.editSelectedAsset();
+    }
+
+    @Then("asset is cropped")
+    public void assetIsCropped() {
+        assetsPage.confirmAssetCrop();
+    }
+
+    @Given("user is logged in and on SitesPage")
+    public void userIsLoggedInAndOnSitesPage() {
+        sitesPage.open();
+    }
+
+    @When("user authors new content page")
+    public void userAuthorsNewContentPage() throws InterruptedException {
+        sitesPage.selectEnglishSite();
+        sitesPage.clickCreateButton();
+        sitesPage.createContentPage();
+        sitesPage.enterPageDetails();
+        sitesPage.publishContentPage();
+    }
+
+    @Then("user sees new content page")
+    public void userSeesNewContentPage() {
+        contentPage.open();
+        contentPage.assertPageTitle();
+    }
+
+    @When("user opens content page")
+    public void userOpensContentPage() throws InterruptedException {
+        sitesPage.selectEnglishSite();
+        sitesPage.selectChildPage();
+        sitesPage.clickEditButton();
+        testContextSetup.genericUtils.SwitchWindowToChild();
+    }
+
+    @And("user adds asset to content page")
+    public void userAddsAssetToContentPage() {
+        contentPage.enterEditMode();
+        contentPage.toggleSidePanel();
+        contentPage.searchForAsset();
+        contentPage.dragAndDropAsset();
+    }
+
+    @Then("asset is visible on content page")
+    public void assetIsVisibleOnContentPage() throws InterruptedException {
+        contentPage.assertAssetVisible();
     }
 }
