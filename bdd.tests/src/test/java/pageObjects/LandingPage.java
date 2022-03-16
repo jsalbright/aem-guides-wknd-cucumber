@@ -3,6 +3,9 @@ package pageObjects;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utils.FileUtils;
+
+import java.util.Properties;
 
 public class LandingPage {
     public WebDriver driver;
@@ -14,7 +17,8 @@ public class LandingPage {
     }
 
     public void open() {
-        this.driver.navigate().to("http://localhost:4502" + "/aem/start.html");
+        Properties prop = FileUtils.getGlobalProperties();
+        this.driver.navigate().to(prop.getProperty("url") + "/aem/start.html");
     }
 
     public void assertLandingPage() {

@@ -48,7 +48,6 @@ public class aemStepDefs {
 
     @Given("user is logged in and on AssetsPage")
     public void userIsLoggedInAndOnAssetsPage() {
-        userLogsInAsAdmin();
         assetsPage.open();
     }
 
@@ -71,7 +70,6 @@ public class aemStepDefs {
 
     @Given("user is logged in and on SitesPage")
     public void userIsLoggedInAndOnSitesPage() {
-        userLogsInAsAdmin();
         sitesPage.open();
     }
 
@@ -109,8 +107,5 @@ public class aemStepDefs {
     @Then("asset is visible on content page")
     public void assetIsVisibleOnContentPage() throws InterruptedException {
         contentPage.assertAssetVisible();
-
-        // TODO Cleanup, need to find better solution
-        sitesPage.deleteChildPage();
     }
 }

@@ -18,7 +18,7 @@ Feature: AEM Testing
     When user authors new content page
     Then user sees new content page
 
-  @sitespage
+  @contentpage
   Scenario: User adds assets to content page
     Given user is logged in and on SitesPage
     When  user opens content page

@@ -4,8 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.FileUtils;
 
 import java.time.Duration;
+import java.util.Properties;
 
 public class SitesPage {
     public WebDriver driver;
@@ -26,11 +28,7 @@ public class SitesPage {
     private By doneButtonXpath = By.xpath("//coral-button-label[text()=\"Done\"]/..");
     private By moreButtonXpath = By.xpath("//button[@title=\"More\"]");
     private By editButtonSelector = By.cssSelector("button[data-foundation-command-label=\"Edit\"]");
-
-    private By deleteChildPageButtonSelector = By.cssSelector("button[trackingelement=\"delete\"]");
     private By childPageXpath = By.xpath("//*[@src=\"/content/wknd-cucumber/us/en/Hello-Name.thumb.48.48.png?ck=\"]/..");
-    private By deleteButtonXpath = By.xpath("/html/body/coral-dialog/div[2]/coral-dialog-footer/button[2]/coral-button-label");
-    private By archiveCheckBoxXpath = By.xpath("//input[@name=\"archive\"]");
 
     public SitesPage(WebDriver driver) {
         this.driver = driver;
@@ -38,7 +36,8 @@ public class SitesPage {
     }
 
     public void open() {
-        this.driver.navigate().to("http://localhost:4502" + "/sites.html/content");
+        Properties prop = FileUtils.getGlobalProperties();
+        this.driver.navigate().to(prop.getProperty("url") + "/sites.html/content");
     }
 
     public void selectEnglishSite() throws InterruptedException {
@@ -52,7 +51,7 @@ public class SitesPage {
         this.driver.findElement(wkndENFolderXpath).click();
 
         // Needed to allow URL to update fully
-        Thread.sleep(500);
+        Thread.sleep(1000);
     }
 
     public void clickCreateButton() {
@@ -90,23 +89,5 @@ public class SitesPage {
     public void selectChildPage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(childPageXpath));
         this.driver.findElement(childPageXpath).click();
-    }
-
-    public void deleteChildPage() throws InterruptedException {
-        open();
-        selectEnglishSite();
-        selectChildPage();
-
-        //wait.until(ExpectedConditions.elementToBeClickable(moreButtonXpath));
-        //this.driver.findElement(moreButtonXpath).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(deleteChildPageButtonSelector));
-        this.driver.findElement(deleteChildPageButtonSelector).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(archiveCheckBoxXpath));
-        this.driver.findElement(archiveCheckBoxXpath).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(deleteButtonXpath));
-        this.driver.findElement(deleteButtonXpath).click();
     }
 }

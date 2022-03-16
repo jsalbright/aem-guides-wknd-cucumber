@@ -10,12 +10,10 @@ public class TestContextSetup {
     public PageObjectManager pageObjectManager;
     public TestBase testBase;
     public GenericUtils genericUtils;
-    public String baseUrl;
 
     public TestContextSetup() throws IOException {
         testBase = new TestBase();
         pageObjectManager = new PageObjectManager(testBase.WebDriverManager());
         genericUtils = new GenericUtils(testBase.WebDriverManager());
-        this.baseUrl = testBase.baseUrl;
     }
 }

@@ -7,8 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.FileUtils;
 
 import java.time.Duration;
+import java.util.Properties;
 
 public class AssetsPage {
     public WebDriver driver;
@@ -32,7 +34,8 @@ public class AssetsPage {
     }
 
     public void open() {
-        this.driver.navigate().to("http://localhost:4502" + "/assets.html/content/dam");
+        Properties prop = FileUtils.getGlobalProperties();
+        this.driver.navigate().to(prop.getProperty("url") + "/assets.html/content/dam");
     }
 
     public void selectWkndCucumberFolder() {
